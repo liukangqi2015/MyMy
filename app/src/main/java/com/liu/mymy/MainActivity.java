@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.liu.mymy.base.BaseActivity;
 import com.liu.mymy.fragment.NewsFragment;
@@ -84,6 +85,27 @@ public class MainActivity extends BaseActivity {
         public Fragment getItem(int position) {
             Log.e(getClass().getSimpleName(),"getItem");
             return mFragments.get(position);
+        }
+
+    }
+
+    /**
+     * 最后按下的时间
+     */
+    private  long lastTime ;
+
+    /**
+     * 按二次返回键退出应用
+     */
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+
+        if(currentTime-lastTime<2*1000){
+            super.onBackPressed();
+        }else {
+            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            lastTime=currentTime;
         }
 
     }
