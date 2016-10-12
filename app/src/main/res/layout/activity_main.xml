@@ -7,22 +7,14 @@
     android:orientation="vertical"
     tools:context="com.liu.mymy.MainActivity">
 
-    <com.flyco.tablayout.SegmentTabLayout
-        android:id="@+id/stl"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginTop="10dp"
-        tl:tl_indicator_anim_enable="true"
-        tl:tl_indicator_bounce_enable="false"
-        tl:tl_indicator_color="#009688"
-        tl:tl_tab_padding="20dp"/>
+        android:layout_height="wrap_content" />
 
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

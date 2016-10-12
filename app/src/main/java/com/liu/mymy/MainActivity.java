@@ -1,14 +1,14 @@
 package com.liu.mymy;
 
-import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import com.flyco.tablayout.SegmentTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.liu.mymy.base.BaseActivity;
+import com.liu.mymy.fragment.NewsFragment;
 import com.liu.mymy.fragment.SimpleCardFragment;
 
 import java.util.ArrayList;
@@ -16,56 +16,52 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG=MainActivity.class.getSimpleName();
-    @BindView(R.id.stl)
-    SegmentTabLayout mSTabLayout;
+public class MainActivity extends BaseActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.vp)
     ViewPager mViewPager;
+    @BindView(R.id.tl)
+    TabLayout mTl;
+
     private String[] mTitles = {"新闻", "干货", "福利"};
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        for (String title : mTitles) {
-            mFragments.add(SimpleCardFragment.getInstance(title));
-        }
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    protected void initView() {
+        mFragments.add(new NewsFragment());
+        mFragments.add(SimpleCardFragment.getInstance(mTitles[1]));
+        mFragments.add(SimpleCardFragment.getInstance(mTitles[2]));
+//        for (String title : mTitles) {
+//            mFragments.add(SimpleCardFragment.getInstance(title));
+//        }
+
+    }
+
+    @Override
+    protected void setOnClickListener() {
+
+    }
+
+    @Override
+    protected void loadData() {
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
-        mSTabLayout.setTabData(mTitles);
-        mSTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                mViewPager.setCurrentItem(position);
-            }
+        mTl.setupWithViewPager(mViewPager);
+        mTl.setTabMode(TabLayout.MODE_FIXED);
+        mViewPager.setCurrentItem(0);
+    }
 
-            @Override
-            public void onTabReselect(int position) {
 
-            }
-        });
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.e(TAG,"position"+position+"positionOffset"+positionOffset+"positionOffsetPixels"+positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mSTabLayout.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        mViewPager.setCurrentItem(1);
+    @Override
+    protected void setLayout() {
+        setContentView(getLayoutId());
+        ButterKnife.bind(this);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -85,7 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            Log.e(getClass().getSimpleName(),"getItem");
             return mFragments.get(position);
         }
+
     }
 }
