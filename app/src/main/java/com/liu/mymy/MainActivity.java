@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
+        mViewPager.setOffscreenPageLimit(2);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mTl.setupWithViewPager(mViewPager);

@@ -33,5 +33,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.jude:easyrecyclerview:4.2.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.android.support:cardview-v7:24.0.0'
+    compile 'com.facebook.fresco:fresco:0.12.0'
+
 
 }

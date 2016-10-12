@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
  * 项目Fragment的基类
  */
 public abstract class BaseFragment extends Fragment {
+    protected View view;
     //宿主Activity
     protected Activity mActivity;
 

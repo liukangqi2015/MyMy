@@ -14,7 +14,6 @@ import com.liu.mymy.adapter.NewsAdapter;
 import com.liu.mymy.api.API;
 import com.liu.mymy.api.ZhiHuApi;
 import com.liu.mymy.base.BaseLazyFragment;
-import com.liu.mymy.bean.NewsBean;
 import com.liu.mymy.bean.ZhiHuBean;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class NewsFragment extends BaseLazyFragment {
     EasyRecyclerView newsErv;
 
     private NewsAdapter newsAdapter;
-    private ArrayList<NewsBean> newsData=new ArrayList<>();
+    private ArrayList<ZhiHuBean.StoriesBean> newsData=new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,35 +51,28 @@ public class NewsFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.e(TAG,"onViewCreated");
+    public int getLayout() {
+        return  R.layout.frag_news;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.e(TAG,"onPause");
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.frag_news;
-    }
-
-    @Override
-    protected void init(View view, Bundle savedInstanceState) {
-        newsErv.setLayoutManager(new LinearLayoutManager(getHoldingActivity()));
-        newsAdapter=new NewsAdapter(getHoldingActivity());
-        for (int i=0;i<20;i++){
-            NewsBean newsBean=new NewsBean();
-            newsBean.setTitle(i+"");
-            newsData.add(newsBean);
-        }
-        setData();
-        newsAdapter.addAll(newsData);
+    public void initViews(View view) {
+        newsErv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        newsAdapter=new NewsAdapter(getActivity());
+//        for (int i=0;i<20;i++){
+//            ZhiHuBean.StoriesBean newsBean=new ZhiHuBean.StoriesBean();
+//            newsBean.setTitle(i+"");
+//            newsData.add(newsBean);
+//        }
+//        setData();
+//        newsAdapter.addAll(newsData);
         newsErv.setAdapter(newsAdapter);
+    }
 
+    @Override
+    public void loadData() {
+        Log.e(TAG,"loadData");
+        setData();
     }
 
     private void setData() {
@@ -90,7 +82,9 @@ public class NewsFragment extends BaseLazyFragment {
         call.enqueue(new Callback<ZhiHuBean>() {
             @Override
             public void onResponse(Call<ZhiHuBean> call, Response<ZhiHuBean> response) {
-                Log.e(TAG,response.body().getDate());
+                if (response!=null){
+                    newsAdapter.addAll(response.body().getStories());
+                }
             }
 
             @Override
@@ -101,11 +95,5 @@ public class NewsFragment extends BaseLazyFragment {
     }
 
 
-    /**
-     *加载数据
-     */
-    @Override
-    public void onLazyLoad() {
 
-    }
 }

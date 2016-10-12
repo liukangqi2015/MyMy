@@ -5,14 +5,14 @@ import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.liu.mymy.bean.NewsBean;
+import com.liu.mymy.bean.ZhiHuBean;
 import com.liu.mymy.viewholder.NewsViewHolder;
 
 /**
  * 新闻列表的Adapter
  * Created by liu on 2016/10/9.
  */
-public class NewsAdapter extends RecyclerArrayAdapter<NewsBean>{
+public class NewsAdapter extends RecyclerArrayAdapter<ZhiHuBean.StoriesBean>{
     public NewsAdapter(Context context) {
         super(context);
     }

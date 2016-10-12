@@ -2,45 +2,61 @@ package com.liu.mymy.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import butterknife.ButterKnife;
 
 /**
  * 懒加载fragment基类
  * Created by liu on 2016/10/12.
  */
-public abstract class BaseLazyFragment extends BaseFragment{
+public abstract class BaseLazyFragment extends Fragment {
     /**
-     * 是否懒加载过
+     * 控件是否初始化完成
      */
-    private boolean isLazyLoaded;
-    private boolean isPrepared;
+    private boolean isViewCreated;
+    /**
+     * 数据是否已加载完毕
+     */
+    private boolean isLoadDataCompleted;
 
+    @Nullable
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        isPrepared = true;
-        //只有Fragment onCreateView好了，
-        //另外这里调用一次lazyLoad(）
-        lazyLoad();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(getLayout(), container, false);
+        ButterKnife.bind(this, view);
+        initViews(view);
+        isViewCreated = true;
+        return view;
     }
+
+    public abstract int getLayout();
+    public abstract void initViews(View view);
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        lazyLoad();
-    }
-
-    /**
-     * 调用懒加载
-     */
-
-    private void lazyLoad() {
-        if (getUserVisibleHint() && isPrepared && !isLazyLoaded) {
-            onLazyLoad();
-            isLazyLoaded = true;
+        if (isVisibleToUser && isViewCreated && !isLoadDataCompleted) {
+            isLoadDataCompleted = true;
+            loadData();
         }
     }
 
-    @UiThread
-    public abstract void onLazyLoad();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (getUserVisibleHint()) {
+            isLoadDataCompleted = true;
+            loadData();
+        }
+    }
+
+    /**
+     * 子类实现加载数据的方法
+     */
+    public abstract  void loadData();
 }
