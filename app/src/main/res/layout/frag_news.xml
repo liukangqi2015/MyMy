@@ -9,7 +9,8 @@
         android:id="@+id/news_erv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        erv:scrollbarStyle="insideOverlay"/>
+        erv:scrollbarStyle="insideOverlay"
+        erv:layout_progress="@layout/view_progress"/>
 
 
 </LinearLayout>

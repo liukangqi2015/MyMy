@@ -38,9 +38,6 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new NewsFragment());
         mFragments.add(SimpleCardFragment.getInstance(mTitles[1]));
         mFragments.add(SimpleCardFragment.getInstance(mTitles[2]));
-//        for (String title : mTitles) {
-//            mFragments.add(SimpleCardFragment.getInstance(title));
-//        }
 
     }
 
@@ -83,7 +80,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.e(getClass().getSimpleName(),"getItem");
+            Log.e(getClass().getSimpleName(), "getItem");
             return mFragments.get(position);
         }
 
@@ -92,7 +89,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 最后按下的时间
      */
-    private  long lastTime ;
+    private long lastTime;
 
     /**
      * 按二次返回键退出应用
@@ -101,11 +98,11 @@ public class MainActivity extends BaseActivity {
     public void onBackPressed() {
         long currentTime = System.currentTimeMillis();
 
-        if(currentTime-lastTime<2*1000){
+        if (currentTime - lastTime < 2 * 1000) {
             super.onBackPressed();
-        }else {
+        } else {
             Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
-            lastTime=currentTime;
+            lastTime = currentTime;
         }
 
     }

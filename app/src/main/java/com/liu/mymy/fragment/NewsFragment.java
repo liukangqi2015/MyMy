@@ -1,14 +1,12 @@
 package com.liu.mymy.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.liu.mymy.R;
 import com.liu.mymy.adapter.NewsAdapter;
 import com.liu.mymy.api.API;
@@ -16,84 +14,137 @@ import com.liu.mymy.api.ZhiHuApi;
 import com.liu.mymy.base.BaseLazyFragment;
 import com.liu.mymy.bean.ZhiHuBean;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 新闻Fragment
  */
-public class NewsFragment extends BaseLazyFragment {
-    private static final String TAG=NewsFragment.class.getSimpleName();
+public class NewsFragment extends BaseLazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerArrayAdapter.OnLoadMoreListener {
+//    private static final String TAG = NewsFragment.class.getSimpleName();
 
     @BindView(R.id.news_erv)
     EasyRecyclerView newsErv;
 
     private NewsAdapter newsAdapter;
-    private ArrayList<ZhiHuBean.StoriesBean> newsData=new ArrayList<>();
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.e(TAG,"onCreate");
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e(TAG,"onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+    //    private ArrayList<ZhiHuBean.StoriesBean> newsData = new ArrayList<>();
+    //当前日期
+    private String currentDate;
+    private Handler handler = new Handler();
 
     @Override
     public int getLayout() {
-        return  R.layout.frag_news;
+        return R.layout.frag_news;
     }
 
     @Override
     public void initViews(View view) {
         newsErv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newsAdapter=new NewsAdapter(getActivity());
-//        for (int i=0;i<20;i++){
-//            ZhiHuBean.StoriesBean newsBean=new ZhiHuBean.StoriesBean();
-//            newsBean.setTitle(i+"");
-//            newsData.add(newsBean);
-//        }
-//        setData();
-//        newsAdapter.addAll(newsData);
-        newsErv.setAdapter(newsAdapter);
+        newsAdapter = new NewsAdapter(getActivity());
+//        newsErv.setAdapter(newsAdapter);
+        //调用一个配有progress的设置Adapter的方法
+        newsErv.setAdapterWithProgress(newsAdapter);
+        newsErv.setRefreshListener(this);
+        newsAdapter.setMore(R.layout.view_more, this);
     }
 
     @Override
     public void loadData() {
-        Log.e(TAG,"loadData");
-        setData();
+        getLastZhihuData();
     }
 
-    private void setData() {
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(API.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        ZhiHuApi zhihuapi=retrofit.create(ZhiHuApi.class);
-        Call<ZhiHuBean> call=zhihuapi.getZhihuBean();
-        call.enqueue(new Callback<ZhiHuBean>() {
+    private void getLastZhihuData() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(API.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
+        final ZhiHuApi zhihuapi = retrofit.create(ZhiHuApi.class);
+        //简单的Retrofit请求
+//        Call<ZhiHuBean> call=zhihuapi.getZhihuBean();
+//        call.enqueue(new Callback<ZhiHuBean>() {
+//            @Override
+//            public void onResponse(Call<ZhiHuBean> call, Response<ZhiHuBean> response) {
+//                if (response!=null){
+//                    newsAdapter.addAll(response.body().getStories());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ZhiHuBean> call, Throwable t) {
+//
+//            }
+//        });
+        //Retrofit与RxJava结合
+        zhihuapi.getLastZhihuBean().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ZhiHuBean>() {
             @Override
-            public void onResponse(Call<ZhiHuBean> call, Response<ZhiHuBean> response) {
-                if (response!=null){
-                    newsAdapter.addAll(response.body().getStories());
-                }
+            public void onCompleted() {
+//                Log.e(TAG,"onCompleted");
             }
 
             @Override
-            public void onFailure(Call<ZhiHuBean> call, Throwable t) {
+            public void onError(Throwable e) {
+//                Log.e(TAG,"onError");
+            }
 
+            @Override
+            public void onNext(ZhiHuBean zhiHuBean) {
+//                Log.e(TAG,"onNext");
+                if (zhiHuBean != null) {
+                    currentDate = zhiHuBean.getDate();
+                    if (zhiHuBean.getStories() != null) {
+                        newsAdapter.addAll(zhiHuBean.getStories());
+                    }
+                }
             }
         });
     }
 
 
+    @Override
+    public void onRefresh() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                newsAdapter.clear();
+                getLastZhihuData();
+            }
+        }, 2000);
+    }
 
+    @Override
+    public void onLoadMore() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getDailyZhihuData();
+            }
+        }, 2000);
+    }
+
+    private void getDailyZhihuData() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(API.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
+        final ZhiHuApi zhihuapi = retrofit.create(ZhiHuApi.class);
+        zhihuapi.getDailyZhihuBean(currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ZhiHuBean>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ZhiHuBean zhiHuBean) {
+                if (zhiHuBean != null) {
+                    currentDate = zhiHuBean.getDate();
+                    if (zhiHuBean.getStories() != null) {
+                        newsAdapter.addAll(zhiHuBean.getStories());
+                    }
+                }
+            }
+        });
+    }
 }
