@@ -1,11 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    
+    <style name="MyTabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="tabBackground">?attr/colorPrimary</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabMode">scrollable</item>
     </style>
 
 </resources>

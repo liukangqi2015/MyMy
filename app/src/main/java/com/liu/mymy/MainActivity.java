@@ -1,11 +1,14 @@
 package com.liu.mymy;
 
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.liu.mymy.base.BaseActivity;
@@ -23,6 +26,8 @@ public class MainActivity extends BaseActivity {
     ViewPager mViewPager;
     @BindView(R.id.tl)
     TabLayout mTl;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private String[] mTitles = {"新闻", "干货", "福利"};
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -35,6 +40,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitleTextColor(Color.WHITE);
         mFragments.add(new NewsFragment());
         mFragments.add(SimpleCardFragment.getInstance(mTitles[1]));
         mFragments.add(SimpleCardFragment.getInstance(mTitles[2]));
@@ -60,6 +67,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setLayout() {
         setContentView(getLayoutId());
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 
@@ -102,7 +116,9 @@ public class MainActivity extends BaseActivity {
             super.onBackPressed();
         } else {
 //            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
-            Snackbar.make(mViewPager,"再按一次退出应用",Snackbar.LENGTH_SHORT).show();
+            Snackbar snackbar=Snackbar.make(mViewPager, "再按一次退出应用", Snackbar.LENGTH_SHORT);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            snackbar.show();
             lastTime = currentTime;
         }
 
