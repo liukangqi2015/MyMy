@@ -1,12 +1,12 @@
 package com.liu.mymy;
 
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.liu.mymy.base.BaseActivity;
 import com.liu.mymy.fragment.NewsFragment;
@@ -101,7 +101,8 @@ public class MainActivity extends BaseActivity {
         if (currentTime - lastTime < 2 * 1000) {
             super.onBackPressed();
         } else {
-            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mViewPager,"再按一次退出应用",Snackbar.LENGTH_SHORT).show();
             lastTime = currentTime;
         }
 
