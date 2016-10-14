@@ -1,7 +1,6 @@
 package com.liu.mymy;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.liu.mymy.base.BaseActivity;
+import com.liu.mymy.fragment.GankAndroidFragment;
 import com.liu.mymy.fragment.NewsFragment;
 import com.liu.mymy.fragment.SimpleCardFragment;
 
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
         toolbar.setTitle(R.string.app_name);
         toolbar.setTitleTextColor(Color.WHITE);
         mFragments.add(new NewsFragment());
-        mFragments.add(SimpleCardFragment.getInstance(mTitles[1]));
+        mFragments.add(new GankAndroidFragment());
         mFragments.add(SimpleCardFragment.getInstance(mTitles[2]));
 
     }
@@ -67,13 +67,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setLayout() {
         setContentView(getLayoutId());
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 
@@ -116,7 +109,7 @@ public class MainActivity extends BaseActivity {
             super.onBackPressed();
         } else {
 //            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
-            Snackbar snackbar=Snackbar.make(mViewPager, "再按一次退出应用", Snackbar.LENGTH_SHORT);
+            Snackbar snackbar=Snackbar.make(mViewPager, getResources().getString(R.string.snack_bar_text), Snackbar.LENGTH_SHORT);
             snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             snackbar.show();
             lastTime = currentTime;

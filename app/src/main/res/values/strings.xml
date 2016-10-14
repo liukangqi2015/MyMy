@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyMy</string>
+    <string name="snack_bar_text">再按一次退出MyMy</string>
 </resources>

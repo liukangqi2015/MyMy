@@ -24,9 +24,7 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/zhihu_thumbnail_iv"
             android:layout_alignTop="@id/zhihu_thumbnail_iv"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
+            style="@style/item_title_text"
             />
 
     </RelativeLayout>

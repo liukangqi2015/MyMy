@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -45,12 +46,19 @@ public class NewsFragment extends BaseLazyFragment implements SwipeRefreshLayout
     @Override
     public void initViews(View view) {
         newsErv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        newsErv.getSwipeToRefresh().setColorSchemeResources(R.color.colorPrimary);
         newsAdapter = new NewsAdapter(getActivity());
 //        newsErv.setAdapter(newsAdapter);
         //调用一个配有progress的设置Adapter的方法
         newsErv.setAdapterWithProgress(newsAdapter);
         newsErv.setRefreshListener(this);
         newsAdapter.setMore(R.layout.view_more, this);
+        newsAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getActivity(),position+"",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
