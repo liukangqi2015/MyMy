@@ -24,4 +24,13 @@ public class WindowUtil {
         final float scale = ctx.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
+    /**
+     * 获取屏幕宽度
+     * @param context
+     * @return
+     */
+    public static int getWindowWidth(Context context){
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
 }
