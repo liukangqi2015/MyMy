@@ -2,10 +2,11 @@ package com.liu.mymy.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.ButterKnife;
 
@@ -13,7 +14,7 @@ import butterknife.ButterKnife;
  * 懒加载fragment基类
  * Created by liu on 2016/10/12.
  */
-public abstract class BaseLazyFragment extends Fragment {
+public abstract class BaseLazyFragment extends RxFragment {
     /**
      * 控件是否初始化完成
      */

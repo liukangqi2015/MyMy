@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void setOnClickListener() {
+    protected void setListener() {
 
     }
 

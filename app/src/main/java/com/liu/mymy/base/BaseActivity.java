@@ -2,12 +2,13 @@ package com.liu.mymy.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
  * 项目Activity基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void init() {
         setLayout();
         initView();
-        setOnClickListener();
+        setListener();
         loadData();
     }
 
@@ -40,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 设置监听器
      */
-    protected abstract void setOnClickListener();
+    protected abstract void setListener();
 
     /**
      * 加载数据
