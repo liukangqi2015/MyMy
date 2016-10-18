@@ -12,8 +12,8 @@ import android.util.Log;
 
 import com.liu.mymy.base.BaseActivity;
 import com.liu.mymy.fragment.GankAndroidFragment;
+import com.liu.mymy.fragment.GankMeiziFragment;
 import com.liu.mymy.fragment.NewsFragment;
-import com.liu.mymy.fragment.SimpleCardFragment;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
         toolbar.setTitleTextColor(Color.WHITE);
         mFragments.add(new NewsFragment());
         mFragments.add(new GankAndroidFragment());
-        mFragments.add(SimpleCardFragment.getInstance(mTitles[2]));
+        mFragments.add(new GankMeiziFragment());
 
     }
 

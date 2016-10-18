@@ -10,16 +10,12 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.liu.mymy.R;
 import com.liu.mymy.adapter.GankAndroidAdapter;
-import com.liu.mymy.api.API;
-import com.liu.mymy.api.GankApi;
+import com.liu.mymy.api.RetrofitHelper;
 import com.liu.mymy.base.BaseLazyFragment;
 import com.liu.mymy.bean.GankAndroidBean;
 import com.liu.mymy.util.WindowUtil;
 
 import butterknife.BindView;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -35,7 +31,7 @@ public class GankAndroidFragment extends BaseLazyFragment implements SwipeRefres
 
     private GankAndroidAdapter gankAndroidAdapter;
     private static  int count=10;
-    private int page=1;
+    private int page=0;
 
     @Override
     public int getLayout() {
@@ -57,13 +53,14 @@ public class GankAndroidFragment extends BaseLazyFragment implements SwipeRefres
     @Override
     public void loadData() {
         gankAndroidAdapter.clear();
+        page=1;
         getGankAndroidData(page);
     }
 
     private void getGankAndroidData(int Page) {
-        Retrofit retrofit=new Retrofit.Builder().baseUrl(API.GANK_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
-        GankApi gankApi=retrofit.create(GankApi.class);
-        gankApi.getGankAndroid(count,page).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<GankAndroidBean>() {
+//        Retrofit retrofit=new Retrofit.Builder().baseUrl(RetrofitHelper.GANK_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
+//        GankApi gankApi=retrofit.create(GankApi.class);
+        RetrofitHelper.getGankAPI().getGankAndroid(count,page).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<GankAndroidBean>() {
             @Override
             public void onCompleted() {
 

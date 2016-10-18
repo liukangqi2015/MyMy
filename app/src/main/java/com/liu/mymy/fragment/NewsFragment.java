@@ -10,15 +10,11 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.liu.mymy.R;
 import com.liu.mymy.adapter.NewsAdapter;
-import com.liu.mymy.api.API;
-import com.liu.mymy.api.ZhiHuApi;
+import com.liu.mymy.api.RetrofitHelper;
 import com.liu.mymy.base.BaseLazyFragment;
 import com.liu.mymy.bean.ZhiHuBean;
 
 import butterknife.BindView;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -67,8 +63,8 @@ public class NewsFragment extends BaseLazyFragment implements SwipeRefreshLayout
     }
 
     private void getLastZhihuData() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(API.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
-        final ZhiHuApi zhihuapi = retrofit.create(ZhiHuApi.class);
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl(RetrofitHelper.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
+//        final ZhiHuApi zhihuapi = retrofit.create(ZhiHuApi.class);
         //简单的Retrofit请求
 //        Call<ZhiHuBean> call=zhihuapi.getZhihuBean();
 //        call.enqueue(new Callback<ZhiHuBean>() {
@@ -85,7 +81,7 @@ public class NewsFragment extends BaseLazyFragment implements SwipeRefreshLayout
 //            }
 //        });
         //Retrofit与RxJava结合
-        zhihuapi.getLastZhihuBean().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ZhiHuBean>() {
+        RetrofitHelper.getZhiHuAPI().getLastZhihuBean().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ZhiHuBean>() {
             @Override
             public void onCompleted() {
 //                Log.e(TAG,"onCompleted");
@@ -132,9 +128,9 @@ public class NewsFragment extends BaseLazyFragment implements SwipeRefreshLayout
     }
 
     private void getDailyZhihuData() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(API.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
-        final ZhiHuApi zhihuapi = retrofit.create(ZhiHuApi.class);
-        zhihuapi.getDailyZhihuBean(currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ZhiHuBean>() {
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl(RetrofitHelper.ZHIHU_BASE_URL).addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
+//        final ZhiHuApi zhihuapi = retrofit.create(ZhiHuApi.class);
+        RetrofitHelper.getZhiHuAPI().getDailyZhihuBean(currentDate).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<ZhiHuBean>() {
             @Override
             public void onCompleted() {
             }
