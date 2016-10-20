@@ -1,20 +1,21 @@
 package com.liu.mymy.viewholder;
 
 import android.support.annotation.LayoutRes;
+import android.support.v4.view.ViewCompat;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.liu.mymy.R;
-import com.liu.mymy.bean.GankMeiziBean;
+import com.liu.mymy.bean.GankMeiziInfo;
 import com.liu.mymy.util.ImageLoader;
 
 /**
  * 妹子福利的ViewHolder
  * Created by liu on 2016/10/17.
  */
-public class GankMeiziViewHolder extends BaseViewHolder<GankMeiziBean.ResultsBean> {
+public class GankMeiziViewHolder extends BaseViewHolder<GankMeiziInfo> {
     private ImageView imageView;
     private TextView textView;
 
@@ -25,10 +26,11 @@ public class GankMeiziViewHolder extends BaseViewHolder<GankMeiziBean.ResultsBea
     }
 
     @Override
-    public void setData(final GankMeiziBean.ResultsBean data) {
+    public void setData(final GankMeiziInfo data) {
         if (data != null) {
-            textView.setText(data.getDesc());
-            ImageLoader.getSingleton().disPlayImage(getContext(),data.getUrl(),imageView);
+            textView.setText(data.desc);
+            ImageLoader.getSingleton().disPlayImage(getContext(),data.url,imageView);
+            ViewCompat.setTransitionName(imageView, data.url);
         }
     }
 }

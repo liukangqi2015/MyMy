@@ -17,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ImagePagerActivity"/>
+        <activity android:name=".activity.ImagePagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.StatusBar"/>
     </application>
 
 </manifest>
