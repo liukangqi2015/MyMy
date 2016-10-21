@@ -1,14 +1,15 @@
 package com.liu.mymy.fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.liu.mymy.R;
+import com.liu.mymy.activity.ZhihuDetailActivity;
 import com.liu.mymy.adapter.NewsAdapter;
 import com.liu.mymy.api.RetrofitHelper;
 import com.liu.mymy.base.BaseLazyFragment;
@@ -52,7 +53,10 @@ public class NewsFragment extends BaseLazyFragment implements SwipeRefreshLayout
         newsAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getActivity(),position+"",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getActivity(),ZhihuDetailActivity.class);
+                intent.putExtra(ZhihuDetailActivity.ID,newsAdapter.getItem(position).getId()+"");
+                intent.putExtra(ZhihuDetailActivity.TITLE,newsAdapter.getItem(position).getTitle());
+                startActivity(intent);
             }
         });
     }

@@ -39,7 +39,6 @@ public class GankMeiziFragment extends BaseLazyFragment implements SwipeRefreshL
     EasyRecyclerView gankMeiziErv;
 
     private GankMeiziAdapter gankMeiziAdapter;
-//    private MeiziAdapter meiziAdapter;
     private List<GankMeiziInfo> data=new ArrayList<>();
     //每一页数据的大小
     private static int count = 10;
@@ -62,7 +61,6 @@ public class GankMeiziFragment extends BaseLazyFragment implements SwipeRefreshL
         gankMeiziErv.setLayoutManager(staggeredGridLayoutManager);
         gankMeiziErv.getSwipeToRefresh().setColorSchemeResources(R.color.colorPrimary);
         gankMeiziAdapter = new GankMeiziAdapter(getActivity());
-//        meiziAdapter=new MeiziAdapter(gankMeiziErv.getRecyclerView(),data);
         gankMeiziErv.setAdapterWithProgress(gankMeiziAdapter);
         gankMeiziErv.setRefreshListener(this);
         gankMeiziAdapter.setMore(R.layout.view_more, this);
