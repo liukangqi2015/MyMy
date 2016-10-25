@@ -99,7 +99,8 @@ public class ZhihuDetailActivity extends BaseActivity {
         settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setLoadWithOverviewMode(true);
-        settings.setBuiltInZoomControls(true);
+        settings.setBuiltInZoomControls(false);
+        settings.setSupportZoom(false);
         //settings.setUseWideViewPort(true);造成文字太小
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);

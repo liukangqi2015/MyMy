@@ -1,5 +1,6 @@
 package com.liu.mymy.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.jude.easyrecyclerview.decoration.DividerDecoration;
 import com.liu.mymy.R;
+import com.liu.mymy.activity.GankDetailActivity;
 import com.liu.mymy.adapter.GankAndroidAdapter;
 import com.liu.mymy.api.RetrofitHelper;
 import com.liu.mymy.base.BaseLazyFragment;
@@ -48,6 +50,16 @@ public class GankAndroidFragment extends BaseLazyFragment implements SwipeRefres
         gankAndroidErv.setAdapterWithProgress(gankAndroidAdapter);
         gankAndroidErv.setRefreshListener(this);
         gankAndroidAdapter.setMore(R.layout.view_more, this);
+        gankAndroidAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                GankAndroidBean.ResultsBean resultsBean= gankAndroidAdapter.getItem(position);
+                Intent intent=new Intent(getActivity(), GankDetailActivity.class);
+                intent.putExtra(GankDetailActivity.DESC,resultsBean.getDesc());
+                intent.putExtra(GankDetailActivity.URL,resultsBean.getUrl());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".base.App">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,6 +25,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.StatusBar"/>
         <activity android:name=".activity.ZhihuDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.GankDetailActivity"
             android:screenOrientation="portrait"/>
     </application>
 
