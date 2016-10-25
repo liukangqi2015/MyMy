@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
     <include layout="@layout/layout_toolbar"/>
-    <com.liu.mymy.widget.HackyViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/image_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

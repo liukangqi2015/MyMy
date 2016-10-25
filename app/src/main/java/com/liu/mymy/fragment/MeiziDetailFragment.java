@@ -13,6 +13,7 @@ import com.liu.mymy.base.BaseFragment;
 import com.liu.mymy.util.ImageLoader;
 
 import butterknife.BindView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 妹子图片详情Fragment
@@ -26,6 +27,8 @@ public class MeiziDetailFragment extends BaseFragment implements RequestListener
     TextView tvImageError;
 
     private String url;
+
+    private PhotoViewAttacher mPhotoViewAttacher;
 
     public static MeiziDetailFragment newInstance(String url){
         MeiziDetailFragment meiziDetailFragment=new MeiziDetailFragment();
@@ -43,6 +46,7 @@ public class MeiziDetailFragment extends BaseFragment implements RequestListener
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         url=getArguments().getString(URL);
+
         ImageLoader.getSingleton().disPlayImage(getHoldingActivity(),url,this);
     }
 
@@ -56,6 +60,7 @@ public class MeiziDetailFragment extends BaseFragment implements RequestListener
     @Override
     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
         meiziIV.setImageDrawable(resource);
+        mPhotoViewAttacher=new PhotoViewAttacher(meiziIV);
         tvImageError.setVisibility(View.GONE);
         return false;
     }

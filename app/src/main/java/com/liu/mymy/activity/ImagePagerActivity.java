@@ -20,7 +20,6 @@ import com.liu.mymy.bean.ResultsBean;
 import com.liu.mymy.fragment.MeiziDetailFragment;
 import com.liu.mymy.util.GlideDownloadImageUtil;
 import com.liu.mymy.util.ShareUtil;
-import com.liu.mymy.widget.HackyViewPager;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
@@ -47,7 +46,7 @@ public class ImagePagerActivity extends BaseActivity {
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
     @BindView(R.id.image_vp)
-    HackyViewPager imageVp;
+    ViewPager imageVp;
 
     //当前图片的位置
     private int currentIndex;
