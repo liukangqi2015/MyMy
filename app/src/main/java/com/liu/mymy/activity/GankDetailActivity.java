@@ -60,8 +60,6 @@ public class GankDetailActivity extends BaseActivity {
     private void initToolBar() {
         gankToolbar.setNavigationIcon(R.drawable.ic_back);
         gankToolbar.setBackgroundResource(R.color.colorPrimary);
-//        gankToolbar.setTitleTextColor(Color.WHITE);
-//        gankToolbar.setTitleMarginStart(0);
         gankToolbar.setNavigationOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -71,7 +69,6 @@ public class GankDetailActivity extends BaseActivity {
             }
         });
         titleTv.setText(desc);
-//        gankToolbar.setTitle(desc);
     }
 
     private void initWebView() {
