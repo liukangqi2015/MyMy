@@ -1,3 +1,3 @@
 # MyMy
 
-![image01](https://github.com/liukangqi2015/MyMy/screenshots/01.png)
+<a href="screenshots/01.png"><img src="screenshots/01.png" width="40%"/></a>
