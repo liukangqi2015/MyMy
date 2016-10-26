@@ -1,3 +1,3 @@
 # MyMy
 
-![image01](https://github.com/liukangqi2015/MyMy/screenshots/01.jpg)
+![image01](https://github.com/liukangqi2015/MyMy/blob/master/screenshots/01.png)
