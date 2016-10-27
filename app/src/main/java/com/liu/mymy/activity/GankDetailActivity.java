@@ -75,7 +75,7 @@ public class GankDetailActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (R.id.action_share==item.getItemId()){
-                    ShareUtil.shareLink(url,desc,GankDetailActivity.this);
+                   share();
                 }
                 return false;
             }
@@ -85,7 +85,7 @@ public class GankDetailActivity extends BaseActivity {
     }
 
     private void share(){
-
+        ShareUtil.shareLink(url,desc,GankDetailActivity.this);
     }
 
     private void initWebView() {
