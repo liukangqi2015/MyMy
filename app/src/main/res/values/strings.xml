@@ -2,4 +2,6 @@
     <string name="app_name">MyMy</string>
     <string name="snack_bar_text">再按一次退出MyMy</string>
     <string name="image_error">图片加载失败</string>
+    <string name="share">分享</string>
+    <string name="save">保存</string>
 </resources>

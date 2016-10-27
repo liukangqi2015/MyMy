@@ -1,6 +1,7 @@
 package com.liu.mymy.activity;
 
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.liu.mymy.R;
 import com.liu.mymy.base.BaseActivity;
+import com.liu.mymy.util.ShareUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,7 +70,22 @@ public class GankDetailActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        gankToolbar.inflateMenu(R.menu.menu_gank_android);
+        gankToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (R.id.action_share==item.getItemId()){
+                    ShareUtil.shareLink(url,desc,GankDetailActivity.this);
+                }
+                return false;
+            }
+        });
         titleTv.setText(desc);
+
+    }
+
+    private void share(){
+
     }
 
     private void initWebView() {

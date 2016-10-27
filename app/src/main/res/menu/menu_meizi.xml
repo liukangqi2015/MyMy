@@ -7,14 +7,14 @@
         android:id="@+id/action_fuli_save"
         android:icon="@drawable/ic_download"
         android:orderInCategory="100"
-        android:title="保存"
+        android:title="@string/save"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_fuli_share"
         android:icon="@drawable/ic_share"
         android:orderInCategory="100"
-        android:title="分享"
+        android:title="@string/share"
         app:showAsAction="always"/>
 
 
