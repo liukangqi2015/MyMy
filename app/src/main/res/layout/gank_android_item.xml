@@ -14,7 +14,6 @@
         android:layout_width="150dp"
         android:layout_height="120dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/gank_android_title_tv"/>
     <TextView

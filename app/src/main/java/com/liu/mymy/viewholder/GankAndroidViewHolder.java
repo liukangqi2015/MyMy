@@ -37,6 +37,8 @@ public class GankAndroidViewHolder extends BaseViewHolder<GankAndroidBean.Result
             if (data.getImages()!=null&&data.getImages().size()>0){
                 ImageLoader.getSingleton().disPlayImage(getContext(), data.getImages().get(0),mIv);
                 mIv.setVisibility(View.VISIBLE);
+            }else {
+                mIv.setVisibility(View.GONE);
             }
 
         }
