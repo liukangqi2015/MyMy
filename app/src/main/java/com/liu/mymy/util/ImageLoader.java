@@ -32,12 +32,12 @@ public class ImageLoader {
 
     //直接加载网络图片
     public void disPlayImage(Context context, String url, ImageView imageView){
-        Glide.with(context).load(url).centerCrop().crossFade().into(imageView);
+        Glide.with(context).load(url).centerCrop().crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
     }
 
     //加载网络图片并设置大小
     public void disPlayImage(Context context, String url, ImageView imageView,int width,int height){
-        Glide.with(context).load(url).centerCrop().crossFade().override(width,height).into(imageView);
+        Glide.with(context).load(url).centerCrop().crossFade().diskCacheStrategy(DiskCacheStrategy.ALL).override(width,height).into(imageView);
     }
 
     //加载网络图片图片并设置监听器

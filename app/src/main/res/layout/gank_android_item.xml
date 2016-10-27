@@ -8,17 +8,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/item_title_text"/>
+
+    <ImageView
+        android:id="@+id/gank_android_iv"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/gank_android_title_tv"/>
     <TextView
         android:id="@+id/gank_android_username_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/gank_android_title_tv"/>
+        android:layout_below="@id/gank_android_iv"/>
     <TextView
         android:id="@+id/gank_android_date_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gank_android_title_tv"
+        android:layout_below="@id/gank_android_iv"
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"/>
 </RelativeLayout>

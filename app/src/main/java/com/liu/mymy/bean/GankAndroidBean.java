@@ -54,6 +54,15 @@ public class GankAndroidBean {
         private String url;
         private boolean used;
         private String who;
+        private List<String> images;
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
 
         public String get_id() {
             return _id;
