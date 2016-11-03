@@ -77,13 +77,13 @@ public class GlideDownloadImageUtil
                     mFile = new File(dir, fileName);
                     FileInputStream fis = new FileInputStream(file.getAbsolutePath());
 
-                    int byteread = 0;
+                    int byteRead = 0;
                     byte[] buf = new byte[1444];
 
                     FileOutputStream fos = new FileOutputStream(mFile.getAbsolutePath());
-                    while ((byteread = fis.read(buf)) != -1)
+                    while ((byteRead = fis.read(buf)) != -1)
                     {
-                        fos.write(buf, 0, byteread);
+                        fos.write(buf, 0, byteRead);
                     }
 
                     fos.close();
