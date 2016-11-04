@@ -4,4 +4,6 @@
     <string name="image_error">图片加载失败</string>
     <string name="share">分享</string>
     <string name="save">保存</string>
+    <string name="network_setting">设置网络</string>
+    <string name="network_warn">网络好像出问题了</string>
 </resources>

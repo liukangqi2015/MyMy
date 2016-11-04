@@ -3,11 +3,11 @@ package com.liu.mymy.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.liu.mymy.util.LogUtil;
 
@@ -22,10 +22,38 @@ import com.liu.mymy.util.LogUtil;
 public class NetworkConnectChangedReceiver extends BroadcastReceiver {
     private static final String TAG = NetworkConnectChangedReceiver.class.getSimpleName();
 
+    private volatile static NetworkConnectChangedReceiver networkConnectChangedReceiver;
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        listeningToWifi(intent);
-        listenToNetworkStateChanged(intent);
+//        listeningToWifi(intent);
+//        listenToNetworkStateChanged(intent);
+        listenToConnectivity(context, intent);
+    }
+
+    public static NetworkConnectChangedReceiver getInstance() {
+        if (networkConnectChangedReceiver == null) {
+            synchronized (NetworkConnectChangedReceiver.class) {
+                if (networkConnectChangedReceiver == null) {
+                    networkConnectChangedReceiver = new NetworkConnectChangedReceiver();
+                }
+            }
+        }
+        return networkConnectChangedReceiver;
+    }
+
+    public void registerNetworkConnectChangedReceiver(Context context) {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        filter.addAction("android.net.wifi.WIFI_STATE_CHANGED");
+        filter.addAction("android.net.wifi.STATE_CHANGE");
+        context.registerReceiver(networkConnectChangedReceiver, filter);
+    }
+
+    public void unRegisterNetworkConnectChangedReceiver(Context context) {
+        if (networkConnectChangedReceiver != null) {
+            context.unregisterReceiver(networkConnectChangedReceiver);
+        }
     }
 
     /**
@@ -70,7 +98,7 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver {
                 NetworkInfo networkInfo = (NetworkInfo) parcelableExtra;
                 NetworkInfo.State state = networkInfo.getState();
                 boolean isConnected = state == NetworkInfo.State.CONNECTED;// 当然，这边可以更精确的确定状态
-                Log.e(TAG, "isConnected" + isConnected);
+                LogUtil.e(TAG, "isConnected" + isConnected);
                 if (isConnected) {
 //                    APP.getInstance().setWifi(true);
                 } else {
@@ -92,7 +120,7 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             ConnectivityManager manager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-            Log.i(TAG, "CONNECTIVITY_ACTION");
+            LogUtil.d(TAG, "CONNECTIVITY_ACTION");
 
             NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
             if (activeNetwork != null) { // connected to the internet
@@ -100,26 +128,26 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver {
                     if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
                         // connected to wifi
 //                        APP.getInstance().setWifi(true);
-                        Log.e(TAG, "当前WiFi连接可用 ");
+                        LogUtil.d(TAG, "当前WiFi连接可用 ");
                     } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
                         // connected to the mobile provider's data plan
 //                        APP.getInstance().setMobile(true);
-                        Log.e(TAG, "当前移动网络连接可用 ");
+                        LogUtil.d(TAG, "当前移动网络连接可用 ");
                     }
                 } else {
-                    Log.e(TAG, "当前没有网络连接，请确保你已经打开网络 ");
+                    LogUtil.e(TAG, "当前没有网络连接，请确保你已经打开网络 ");
                 }
 
 
-                Log.e(TAG, "info.getTypeName()" + activeNetwork.getTypeName());
-                Log.e(TAG, "getSubtypeName()" + activeNetwork.getSubtypeName());
-                Log.e(TAG, "getState()" + activeNetwork.getState());
-                Log.e(TAG, "getDetailedState()"
+                LogUtil.e(TAG, "info.getTypeName()" + activeNetwork.getTypeName());
+                LogUtil.e(TAG, "getSubtypeName()" + activeNetwork.getSubtypeName());
+                LogUtil.e(TAG, "getState()" + activeNetwork.getState());
+                LogUtil.e(TAG, "getDetailedState()"
                         + activeNetwork.getDetailedState().name());
-                Log.e(TAG, "getDetailedState()" + activeNetwork.getExtraInfo());
-                Log.e(TAG, "getType()" + activeNetwork.getType());
+                LogUtil.e(TAG, "getDetailedState()" + activeNetwork.getExtraInfo());
+                LogUtil.e(TAG, "getType()" + activeNetwork.getType());
             } else {   // not connected to the internet
-                Log.e(TAG, "当前没有网络连接，请确保你已经打开网络 ");
+                LogUtil.e(TAG, "当前没有网络连接，请确保你已经打开网络 ");
 //                APP.getInstance().setWifi(false);
 //                APP.getInstance().setMobile(false);
 //                APP.getInstance().setConnected(false);

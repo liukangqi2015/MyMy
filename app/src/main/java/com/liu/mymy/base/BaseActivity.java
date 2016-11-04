@@ -3,12 +3,14 @@ package com.liu.mymy.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.liu.mymy.network.TANetChangeObserver;
+import com.liu.mymy.network.TANetworkStateReceiver;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 /**
  * 项目Activity基类
  */
-public abstract class BaseActivity extends RxAppCompatActivity {
+public abstract class BaseActivity extends RxAppCompatActivity implements TANetChangeObserver{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +18,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     private void init() {
+        TANetworkStateReceiver.registerNetworkStateReceiver(this);
+        TANetworkStateReceiver.registerObserver(this);
         setLayout();
         initView();
         setListener();
@@ -47,4 +51,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 加载数据
      */
     protected abstract void loadData();
+
+    @Override
+    protected void onDestroy() {
+        TANetworkStateReceiver.unRegisterNetworkStateReceiver(this);
+        TANetworkStateReceiver.removeRegisterObserver(this);
+        super.onDestroy();
+    }
 }

@@ -1,6 +1,8 @@
 package com.liu.mymy;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,11 +11,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.liu.mymy.base.BaseActivity;
 import com.liu.mymy.fragment.GankAndroidFragment;
 import com.liu.mymy.fragment.GankMeiziFragment;
 import com.liu.mymy.fragment.NewsFragment;
+import com.liu.mymy.network.TANetWorkUtil;
+import com.liu.mymy.util.LogUtil;
 
 import java.util.ArrayList;
 
@@ -70,6 +75,37 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
+    @Override
+    public void onConnect(TANetWorkUtil.netType type) {
+
+    }
+
+    @Override
+    public void onDisConnect() {
+        LogUtil.e(TAG, "网络不可用");
+        Snackbar snackbar = Snackbar.make(mViewPager, getResources().getString(R.string.network_warn), Snackbar.LENGTH_LONG);
+        snackbar.setAction(getResources().getString(R.string.network_setting), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 跳转到系统的网络设置界面
+                Intent intent = null;
+                // 先判断当前系统版本
+                if (android.os.Build.VERSION.SDK_INT > 10) {  // 3.0以上
+                    intent = new Intent(android.provider.Settings
+                            .ACTION_WIFI_SETTINGS);
+                } else {
+                    intent = new Intent();
+                    intent.setClassName("com.android.settings",
+                            Settings.ACTION_WIFI_SETTINGS);
+                }
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        snackbar.show();
+    }
+
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -109,11 +145,23 @@ public class MainActivity extends BaseActivity {
             super.onBackPressed();
         } else {
 //            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
-            Snackbar snackbar=Snackbar.make(mViewPager, getResources().getString(R.string.snack_bar_text), Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(mViewPager, getResources().getString(R.string.snack_bar_text), Snackbar.LENGTH_SHORT);
             snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             snackbar.show();
             lastTime = currentTime;
         }
 
     }
+
+//    @Override
+//    protected void onResume() {
+//        NetworkConnectChangedReceiver.getInstance().registerNetworkConnectChangedReceiver(this);
+//        super.onResume();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        NetworkConnectChangedReceiver.getInstance().unRegisterNetworkConnectChangedReceiver(this);
+//        super.onPause();
+//    }
 }

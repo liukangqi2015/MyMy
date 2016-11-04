@@ -16,6 +16,7 @@ import com.liu.mymy.R;
 import com.liu.mymy.api.RetrofitHelper;
 import com.liu.mymy.base.BaseActivity;
 import com.liu.mymy.bean.ZhiHuStory;
+import com.liu.mymy.network.TANetWorkUtil;
 import com.liu.mymy.util.ImageLoader;
 import com.liu.mymy.util.WebUtil;
 
@@ -204,4 +205,13 @@ public class ZhihuDetailActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onConnect(TANetWorkUtil.netType type) {
+
+    }
+
+    @Override
+    public void onDisConnect() {
+
+    }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.liu.mymy.R;
 import com.liu.mymy.base.BaseActivity;
+import com.liu.mymy.network.TANetWorkUtil;
 import com.liu.mymy.util.ShareUtil;
 
 import butterknife.BindView;
@@ -135,5 +136,15 @@ public class GankDetailActivity extends BaseActivity {
                 gankWebView = null;
             }
         }
+    }
+
+    @Override
+    public void onConnect(TANetWorkUtil.netType type) {
+
+    }
+
+    @Override
+    public void onDisConnect() {
+
     }
 }

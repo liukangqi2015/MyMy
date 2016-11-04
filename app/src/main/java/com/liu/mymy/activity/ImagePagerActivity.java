@@ -18,6 +18,7 @@ import com.liu.mymy.R;
 import com.liu.mymy.base.BaseActivity;
 import com.liu.mymy.bean.ResultsBean;
 import com.liu.mymy.fragment.MeiziDetailFragment;
+import com.liu.mymy.network.TANetWorkUtil;
 import com.liu.mymy.util.GlideDownloadImageUtil;
 import com.liu.mymy.util.ShareUtil;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -261,6 +262,16 @@ public class ImagePagerActivity extends BaseActivity {
         super.onResume();
         imageVp.setCurrentItem(currentIndex);
         url = gankMeizis.get(currentIndex).getUrl();
+    }
+
+    @Override
+    public void onConnect(TANetWorkUtil.netType type) {
+
+    }
+
+    @Override
+    public void onDisConnect() {
+
     }
 
     private class MeiziPagerAdapter extends FragmentStatePagerAdapter {
