@@ -47,7 +47,7 @@ public class MeiziDetailFragment extends BaseFragment implements RequestListener
     protected void init(View view, Bundle savedInstanceState) {
         url=getArguments().getString(URL);
 
-        ImageLoader.getSingleton().disPlayImage(getHoldingActivity(),url,this);
+        ImageLoader.disPlayImage(getHoldingActivity(),url,this);
     }
 
 

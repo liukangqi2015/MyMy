@@ -29,7 +29,7 @@ public class GankMeiziViewHolder extends BaseViewHolder<GankMeiziInfo> {
     public void setData(final GankMeiziInfo data) {
         if (data != null) {
             textView.setText(data.desc);
-            ImageLoader.getSingleton().disPlayImage(getContext(),data.url,imageView);
+            ImageLoader.disPlayImage(getContext(),data.url,imageView);
             ViewCompat.setTransitionName(imageView, data.url);
         }
     }

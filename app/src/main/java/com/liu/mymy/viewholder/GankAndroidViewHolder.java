@@ -35,7 +35,7 @@ public class GankAndroidViewHolder extends BaseViewHolder<GankAndroidBean.Result
             mTv_date.setText(ChangeTimeFormat.changeToYearMonthDay(ChangeTimeFormat.changeStringToDate(data.getCreatedAt())));
             mTv_username.setText(data.getWho());
             if (data.getImages()!=null&&data.getImages().size()>0){
-                ImageLoader.getSingleton().disPlayImage(getContext(), data.getImages().get(0),mIv);
+                ImageLoader.disPlayImage(getContext(), data.getImages().get(0),mIv);
                 mIv.setVisibility(View.VISIBLE);
             }else {
                 mIv.setVisibility(View.GONE);

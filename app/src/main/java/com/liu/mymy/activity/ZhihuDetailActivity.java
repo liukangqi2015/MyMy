@@ -151,7 +151,7 @@ public class ZhihuDetailActivity extends BaseActivity {
     }
 
     private void showStory(ZhiHuStory zhiHuStory) {
-        ImageLoader.getSingleton().disPlayImage(this, zhiHuStory.getImage(), iv);
+        ImageLoader.disPlayImage(this, zhiHuStory.getImage(), iv);
         url=zhiHuStory.getShareUrl();
         mBody=zhiHuStory.getBody();
         css=zhiHuStory.getCss();

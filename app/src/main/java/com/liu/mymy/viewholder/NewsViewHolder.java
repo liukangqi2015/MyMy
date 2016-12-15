@@ -28,7 +28,7 @@ public class NewsViewHolder extends BaseViewHolder<ZhiHuBean.StoriesBean> {
     public void setData(ZhiHuBean.StoriesBean data) {
         if (data != null) {
             mTv_title.setText(data.getTitle());
-            ImageLoader.getSingleton().disPlayImage(getContext(), data.getImages().get(0), mIv_thumbnail);
+            ImageLoader.disPlayImage(getContext(), data.getImages().get(0), mIv_thumbnail);
         }
 
     }
